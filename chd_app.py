@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="CHD計算ツール", layout="centered")
+st.set_page_config(page_title="焼入深さ計算ツール", layout="centered")
 
 # --- CSS ---
 st.markdown("""
@@ -21,7 +21,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📱 有効硬化層深さ (CHD) 計算ツール")
+st.title("📱 焼入深さ計算ツール")
 
 # --- 初期化 ---
 for key in ["limit_hardness", "d1", "h1", "d2", "h2"]:
@@ -62,8 +62,9 @@ if None not in [limit_hardness_val, d1_val, h1_val, d2_val, h2_val]:
 # --- 出力 ---
 st.subheader("📊 計算結果")
 if chd is not None:
-    st.success(f"CHD = {chd:.2f}")  # ← 小数点2桁
+    st.success(f"焼入深さ = {chd:.2f}")  # ← 小数点2桁
 elif all(st.session_state.get(k, "") == "" for k in ["limit_hardness","d1","h1","d2","h2"]):
     st.info("値を入力してください。")
 else:
     st.warning("限界硬さを超えるデータが見つかりませんでした。")
+
