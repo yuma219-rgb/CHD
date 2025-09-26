@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="CHD計算ツール", layout="centered")
 
-# --- カスタムCSS ---
+# --- CSS ---
 st.markdown("""
 <style>
     input[type="text"] {
@@ -23,10 +23,15 @@ st.markdown("""
 
 st.title("📱 有効硬化層深さ (CHD) 計算ツール")
 
+# --- 初期化 ---
+for key in ["limit_hardness", "d1", "h1", "d2", "h2"]:
+    st.session_state.setdefault(key, "")
+
 # --- リセットボタン ---
 if st.button("🔄 リセット"):
-    st.session_state.clear()   # セッション状態をすべて消す
-    st.rerun()    # 再描画して完全リセット
+    for key in ["limit_hardness", "d1", "h1", "d2", "h2"]:
+        st.session_state[key] = ""   # 値を空に上書き
+    st.rerun()                       # 再描画
 
 # --- 入力欄 ---
 limit_hardness = st.text_input("有効硬化層の限界硬さ", key="limit_hardness")
@@ -57,7 +62,7 @@ if None not in [limit_hardness_val, d1_val, h1_val, d2_val, h2_val]:
 # --- 出力 ---
 st.subheader("📊 計算結果")
 if chd is not None:
-    st.success(f"CHD = {chd:.4f}")
+    st.success(f"CHD = {chd:.2f}")  # ← 小数点2桁
 elif all(st.session_state.get(k, "") == "" for k in ["limit_hardness","d1","h1","d2","h2"]):
     st.info("値を入力してください。")
 else:
